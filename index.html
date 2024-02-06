@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styling.css" />
+    <title>FLUFFY SUN</title>
+  </head>
+  <body>
+    <!--asking for cache data permition-->
+    <div id="cach-perm">
+      <h2>we have a small reqwest!</h2>
+      <p>
+        do you trust us for saving some data on your device tomake your visits
+        much easer and faster ?
+      </p>
+      <button class="cancel-cach" onclick="hideCachPerm()">NO</button>
+      <button class="accept-cach" onclick="acceptCach()">YES</button>
+    </div>
+
+    <!--main contents-->
+    <div id="mother">
+      <div class="child">
+        <div class="navigation">
+          <img class="logo" src="pics/logo.png" />
+          <h1>FLUFFY SUN</h1>
+        </div>
+        <input type="text" id="search_bar" oninput="search()" />
+        <button onclick="forcast('london')">london</button>
+        <div id="display"></div>
+      </div>
+    </div>
+    <script src="scripts.js"></script>
+  </body>
+</html>
