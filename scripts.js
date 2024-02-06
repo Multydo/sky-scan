@@ -76,7 +76,13 @@ function forcast(location) {
   let constructe_output = ``;
 
   let constructe_api =
-    api_url + protocol + "?key=" + api_key + "&q=" + location + "&days=14";
+    api_url +
+    protocol +
+    "?key=" +
+    api_key +
+    "&q=" +
+    location +
+    "&days=14&alerts=yes";
   fetch(constructe_api)
     .then((response) => response.json())
     .then((data) => {
