@@ -5,6 +5,7 @@ var cach_data = { cachperm: false, search_history: ["london"] };
 var search_mod = "forcast";
 var forcast_data = [];
 var SIunits = ["c", "i"];
+var alert_for_display = ``;
 var data_for_display = ``;
 var sub_data_for_display = ``;
 
@@ -214,6 +215,7 @@ function biuldForcastData() {
       <h4>Visibility :${forcast_data.current.vis_km} km</h4>
       <h4>UV Index :${forcast_data.current.uv}</h4>
     </div>
+    
     `;
   } else {
     sub_data_for_display += `
@@ -234,6 +236,46 @@ function biuldForcastData() {
     </div>
     `;
   }
+  let size = forcast_data.alerts.alert.length;
+  if (size > 0) {
+    for (let i = 0; i < size; i++) {
+      alert_for_display += `
+  
+  <div class="alert_header">
+        <h2>Warning !!</h2>
+        <h3>Presence of weather alerts:</h3>
+      </div>
+<h3>Headline: ${forcast_data.alerts.alert[i].headline}</h3>
+<h3>Description: ${forcast_data.alerts.alert[i].desc}</h3>
+      <h3>Area: ${forcast_data.alerts.alert[i].areas}</h3>
+<h3>Severity: ${forcast_data.alerts.alert[i].severity}</h3>
+
+      <h3>Urgency: ${forcast_data.alerts.alert[i].urgency}</h3>
+      <h3>Category: ${forcast_data.alerts.alert[i].category}</h3>
+
+      <h3>Certainty: ${forcast_data.alerts.alert[i].certainty}</h3>
+
+      
+
+      <h3>Effective: ${forcast_data.alerts.alert[i].effective}</h3>
+
+      <h3>Event Start: ${forcast_data.alerts.alert[i].effective}</h3>
+
+      <h3>Event End: ${forcast_data.alerts.alert[i].expires}</h3>
+
+      
+
+      <h3>Instruction: ${forcast_data.alerts.alert[i].instruction}</h3>
+
+      <h3>Msgtype: ${forcast_data.alerts.alert[i].msgtype}</h3>
+
+      <h3>Note: ${forcast_data.alerts.alert[i].note}</h3>
+
+      <hr>
+  
+  `;
+    }
+  }
 
   displayForcastData();
 }
@@ -242,8 +284,20 @@ function displayForcastData() {
   let weather_icon = document.getElementById("weather_icon");
   let weather_content = document.getElementById("weather_content");
   let sub_content = document.getElementById("sub_content");
+  let alert_output = document.getElementById("alerts_display");
 
   weather_icon.innerHTML = `<img class="condition-icon" src="${forcast_data.current.condition.icon}">`;
   weather_content.innerHTML = data_for_display;
   sub_content.innerHTML = sub_data_for_display;
+
+  if (forcast_data.alerts.alert.length > 0) {
+    alert_output.style.display = "block";
+    alert_output.innerHTML = `
+    <button class="alerts_btn" onclick="showAlerts()">
+    Warning !  Their are ${forcast_data.alerts.alert.length} alert(s) for this location click to show
+    </button>
+    `;
+  } else {
+    alert_output.style.display = "none";
+  }
 }
