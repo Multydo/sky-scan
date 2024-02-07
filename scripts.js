@@ -23,6 +23,7 @@ function navigation() {
 /* #############################################  MANAGING THE JOBS  ########################################## */
 
 function changeJob(mode) {
+  document.getElementById("navigation-menu").style.display = "none";
   search_mod = mode;
   console.log(search_mod);
   document.getElementById(
@@ -38,6 +39,8 @@ function changeJob(mode) {
   cachManager();
 }
 function jobManager(location) {
+  data_for_display = ``;
+  sub_data_for_display = ``;
   switch (search_mod) {
     case "forcast":
       forcast(location);
@@ -61,6 +64,7 @@ function cachManager() {
 }
 function hideCachPerm() {
   document.getElementById("cach-perm").style.display = "none";
+  return;
 }
 function acceptCach() {
   hideCachPerm();
@@ -87,7 +91,14 @@ function cachDisplay() {
       break;
   }
 
-  for (let i = 0; i < cach_data.search_history.length; i++) {
+  let bound = 0;
+
+  if (cach_data.search_history.length > 5) {
+    bound = 5;
+  } else {
+    bound = cach_data.search_history.length;
+  }
+  for (let i = 0; i < bound; i++) {
     console.log(i);
     generated_output += `<button class="search_history" onclick="jobManager('${cach_data.search_history[i]}')">${cach_data.search_history[i]}</button>`;
   }
@@ -122,14 +133,17 @@ function search() {
 }
 
 function saveSearch(location) {
-  for (let i = 0; i < cach_data.search_history.length; i++) {
-    if (cach_data.search_history[i] == location) {
-      jobManager(location);
-    }
+  let temp = cach_data.search_history.slice(location);
+  let status = temp.includes(location);
+  if (status) {
+    jobManager(location);
+  } else {
+    console.log(cach_data.search_history);
+    cach_data.search_history.unshift(location);
+    localStorage.setItem(cach_key, JSON.stringify(cach_data));
+    console.log(cach_data.search_history);
+    jobManager(location);
   }
-  let size = cach_data.search_history.length;
-  cach_data.search_history[size] = location;
-  jobManager(location);
 }
 
 /* #############################################  MANAGING THE FORCASTING DATA  ########################################## */
@@ -147,7 +161,7 @@ function forcast(location) {
     api_key +
     "&q=" +
     location +
-    "&days=14&alerts=yes";
+    "&days=14&alerts=yes&aqi=yes";
   fetch(constructe_api)
     .then((response) => response.json())
     .then((data) => {
@@ -172,6 +186,53 @@ function biuldForcastData() {
         <h4>Feels Like : ${forcast_data.current.feelslike_c} C </h4>
     </div>
           `;
+  } else {
+    data_for_display += `
+          <h4>Temperature : ${forcast_data.current.temp_f} F </h4>
+          </div>
+    <div class="sub-info-1">
+        <h4>Clouds : ${forcast_data.current.cloud} %</h4>
+        <h4>Feels Like : ${forcast_data.current.feelslike_f} F </h4>
+    </div>
+          `;
+  }
+
+  if (SIunits[1] == "m") {
+    sub_data_for_display += `
+    <div class="sub_content_data">
+      <h4>Gust :${forcast_data.current.gust_kph} kph</h4>
+      <h4>Humidity :${forcast_data.current.humidity}%</h4>
+      <h4>Precipitation :${forcast_data.current.precip_mm} mm</h4>
+    </div>
+    <div class="sub_content_data">
+      <h4>Wind Degree :${forcast_data.current.wind_degree}</h4>
+      <h4>Wind Direction :${forcast_data.current.wind_dir}</h4>
+      <h4>Wind Speed :${forcast_data.current.wind_kph} kph</h4>
+    </div>
+    <div class="sub_content_data">
+      <h4>Pressure :${forcast_data.current.pressure_mb} mb</h4>
+      <h4>Visibility :${forcast_data.current.vis_km} km</h4>
+      <h4>UV Index :${forcast_data.current.uv}</h4>
+    </div>
+    `;
+  } else {
+    sub_data_for_display += `
+    <div class="sub_content_data">
+      <h4>Gust :${forcast_data.current.gust_mph} mph</h4>
+      <h4>Humidity :${forcast_data.current.humidity}%</h4>
+      <h4>Precipitation :${forcast_data.current.precip_in} in</h4>
+    </div>
+    <div class="sub_content_data">
+      <h4>Wind Degree :${forcast_data.current.wind_degree}</h4>
+      <h4>Wind Direction :${forcast_data.current.wind_dir}</h4>
+      <h4>Wind Speed :${forcast_data.current.wind_mph} mph</h4>
+    </div>
+    <div class="sub_content_data">
+      <h4>Pressure :${forcast_data.current.pressure_in} in</h4>
+      <h4>Visibility :${forcast_data.current.vis_miles} mile(s)</h4>
+      <h4>UV Index :${forcast_data.current.uv}</h4>
+    </div>
+    `;
   }
 
   displayForcastData();
@@ -184,4 +245,5 @@ function displayForcastData() {
 
   weather_icon.innerHTML = `<img class="condition-icon" src="${forcast_data.current.condition.icon}">`;
   weather_content.innerHTML = data_for_display;
+  sub_content.innerHTML = sub_data_for_display;
 }
