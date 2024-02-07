@@ -1,5 +1,5 @@
 const api_key = "b62c832a0d2d4a7abd3110509240602";
-var api_url = "http://api.weatherapi.com/v1";
+var api_url = "https://api.weatherapi.com/v1";
 var cach_key = "stored-data";
 var cach_data = { cachperm: false, search_history: ["london"] };
 
