@@ -4,30 +4,105 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="styling.css" />
+    <script
+      src="https://kit.fontawesome.com/50b8d88a6d.js"
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <title>FLUFFY SUN</title>
   </head>
   <body>
-    <!--asking for cache data permition-->
-    <div id="cach-perm">
-      <h2>we have a small reqwest!</h2>
-      <p>
-        do you trust us for saving some data on your device tomake your visits
-        much easer and faster ?
-      </p>
-      <button class="cancel-cach" onclick="hideCachPerm()">NO</button>
-      <button class="accept-cach" onclick="acceptCach()">YES</button>
-    </div>
-
     <!--main contents-->
     <div id="mother">
       <div class="child">
-        <div class="navigation">
-          <img class="logo" src="pics/logo.png" />
-          <h1>FLUFFY SUN</h1>
+        <!--asking for cache data permition-->
+        <div id="cach-perm">
+          <h2>We have a small request!</h2>
+          <p>
+            Do you trust us to enhance your browsing experience by saving some
+            data on your device? This will make your visits smoother and faster.
+          </p>
+          <button class="cancel-cach" onclick="hideCachPerm()">NO</button>
+          <button class="accept-cach" onclick="acceptCach()">YES</button>
         </div>
-        <input type="text" id="search_bar" oninput="search()" />
-        <button onclick="forcast('london')">london</button>
-        <div id="display"></div>
+        <div class="navigation">
+          <div class="sub-nave">
+            <img class="logo" src="pics/logo.png" />
+            <h1>FLUFFY SUN</h1>
+          </div>
+          <div class="right-nav-part">
+            <a href="#" class="contact-us">
+              <lord-icon
+                src="https://cdn.lordicon.com/wzrwaorf.json"
+                trigger="loop"
+                style="width: 70px; height: 70px"
+              >
+              </lord-icon
+            ></a>
+            <hr />
+            <button class="more" onclick="navigation()">
+              <lord-icon
+                src="https://cdn.lordicon.com/uecgmesg.json"
+                trigger="loop"
+                style="width: 70px; height: 70px"
+              >
+              </lord-icon>
+            </button>
+          </div>
+        </div>
+        <div class="navigation-menu" id="navigation-menu" style="display: none">
+          <h3>Forcast Modes</h3>
+          <button
+            class="forcast_choice"
+            id="curentForcast"
+            onclick="changeJob('forcast')"
+          >
+            Curent and Future Weather</button
+          ><button
+            class="forcast_choice"
+            id="historyForcast"
+            onclick="changeJob('history')"
+          >
+            Past Days Weather</button
+          ><button
+            class="forcast_choice"
+            id="marineForcast"
+            onclick="changeJob('marine')"
+          >
+            Marine and Sailing weather
+          </button>
+          <h3>Settings</h3>
+          <button class="settings" id="SISetings" onclick="showSettings()">
+            SI Uints
+          </button>
+        </div>
+        <div class="search-div">
+          <div class="search-input-div">
+            <h3 id="search_bar_lable"></h3>
+            <div class="sub-search-input-div">
+              <input type="text" id="search_bar" oninput="search()" />
+              <button class="conferm-search" onclick="lunshSearch()">
+                <lord-icon
+                  src="https://cdn.lordicon.com/unukghxb.json"
+                  trigger="hover"
+                  style="width: 50px; height: 50px"
+                >
+                </lord-icon>
+              </button>
+            </div>
+          </div>
+          <div id="display" class="search-display-div"></div>
+        </div>
+
+        <div id="main_content" class="main_content">
+          <div class="head_content">
+            <div id="weather_icon"></div>
+            <div class="text_content">
+              <div id="weather_content"></div>
+            </div>
+          </div>
+          <div id="sub_content"></div>
+        </div>
       </div>
     </div>
     <script src="scripts.js"></script>
