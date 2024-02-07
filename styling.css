@@ -1,4 +1,14 @@
 @media (min-width: 769px) {
+  body {
+    margin: 0;
+  }
+  .background_animation {
+    position: fixed;
+    border: 0;
+    z-index: -5;
+    width: 100%;
+    height: 100%;
+  }
   .child {
     font-family: "Franklin Gothic Medium", "Arial Narrow", Arial, sans-serif;
     display: flex;
@@ -57,11 +67,16 @@
   }
 
   .navigation {
+    margin-top: 20px;
+    background-color: white;
     width: 80%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 4px 4px 10px gray;
+    border: 2px solid black;
+    border-bottom: 7px solid black;
+    border-right: 7px solid black;
+    box-shadow: 4px 4px 10px black;
     border-radius: 10px;
     padding: 10px;
   }
@@ -92,8 +107,13 @@
   .search-div {
     margin-top: 20px;
     width: 80%;
+
+    background-color: white;
     border-radius: 10px;
-    box-shadow: 4px 4px 10px gray;
+    border: 2px solid black;
+    border-bottom: 7px solid black;
+    border-right: 7px solid black;
+    box-shadow: 4px 4px 10px black;
   }
   #search_bar_lable {
     padding-left: 20px;
@@ -207,9 +227,12 @@
   .main_content {
     display: flex;
     border-radius: 10px;
-    box-shadow: 4px 4px 10px gray;
+    border: 2px solid black;
+    border-bottom: 7px solid black;
+    border-right: 7px solid black;
+    box-shadow: 4px 4px 10px black;
     width: 80%;
-
+    background-color: white;
     margin-top: 20px;
   }
   .main_content hr {
@@ -251,6 +274,7 @@
     display: none;
     width: 80%;
     padding: 10px;
+    background-color: white;
     box-shadow: 4px 4px 10px red;
     border: 2px solid red;
     border-radius: 10px;
@@ -338,7 +362,10 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    box-shadow: 4px 4px 10px gray;
+    border: 2px solid black;
+    border-bottom: 7px solid black;
+    border-right: 7px solid black;
+    box-shadow: 4px 4px 10px black;
     border-radius: 10px;
     padding: 10px;
   }
@@ -365,8 +392,12 @@
   .search-div {
     margin-top: 20px;
     width: 90%;
+    background-color: white;
     border-radius: 10px;
-    box-shadow: 4px 4px 10px gray;
+    border: 2px solid black;
+    border-bottom: 7px solid black;
+    border-right: 7px solid black;
+    box-shadow: 4px 4px 10px black;
   }
   #search_bar_lable {
     padding-left: 20px;
@@ -481,9 +512,12 @@
     display: flex;
     flex-direction: column;
     border-radius: 10px;
-    box-shadow: 4px 4px 10px gray;
+    border: 2px solid black;
+    border-bottom: 7px solid black;
+    border-right: 7px solid black;
+    box-shadow: 4px 4px 10px black;
     width: 90%;
-
+    background-color: white;
     margin-top: 20px;
   }
   .main_content hr {
@@ -518,6 +552,7 @@
   }
   #alerts_display {
     display: none;
+    background-color: white;
     width: 80%;
     padding: 10px;
     box-shadow: 4px 4px 10px red;
