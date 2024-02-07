@@ -68,7 +68,7 @@
 
   .navigation {
     margin-top: 20px;
-    background: linear-gradient(to right, #08a88a, #08a88a, white);
+    background: linear-gradient(to right, transparent, transparent, white);
     width: 80%;
     display: flex;
 
@@ -112,12 +112,21 @@
     margin-top: 20px;
     width: 80%;
 
-    background-color: white;
-    border-radius: 10px;
+    background: linear-gradient(to bottom left, transparent, white, white);
+
     border: 2px solid black;
-    border-bottom: 7px solid black;
-    border-right: 7px solid black;
-    box-shadow: 4px 4px 10px black;
+    border-bottom: 7px solid;
+    border-right: 7px solid;
+    border-image: linear-gradient(
+        to bottom left,
+        #08a88a,
+        #08a88a,
+        black,
+        black,
+        black,
+        black
+      )
+      1;
   }
   #search_bar_lable {
     padding-left: 20px;
@@ -230,13 +239,23 @@
   }
   .main_content {
     display: flex;
-    border-radius: 10px;
-    border: 2px solid black;
-    border-bottom: 7px solid black;
-    border-right: 7px solid black;
-    box-shadow: 4px 4px 10px black;
+
+    border: 2px solid;
+    border-bottom: 7px solid;
+    border-right: 7px solid;
+    background: linear-gradient(to bottom right, transparent, white, white);
+    border-image: linear-gradient(
+        to bottom right,
+        #08a88a,
+        #08a88a,
+        black,
+        black,
+        black,
+        black
+      )
+      1;
     width: 80%;
-    background-color: white;
+
     margin-top: 20px;
   }
   .main_content hr {
@@ -374,7 +393,7 @@
   .navigation {
     width: 90%;
     margin-top: 20px;
-    background: linear-gradient(to right, #08a88a, #08a88a, white);
+    background: linear-gradient(to right, transparent, transparent, white);
 
     display: flex;
 
@@ -412,12 +431,22 @@
   .search-div {
     margin-top: 20px;
     width: 90%;
-    background-color: white;
-    border-radius: 10px;
+
+    background: linear-gradient(to bottom left, transparent, white, white);
+
     border: 2px solid black;
-    border-bottom: 7px solid black;
-    border-right: 7px solid black;
-    box-shadow: 4px 4px 10px black;
+    border-bottom: 7px solid;
+    border-right: 7px solid;
+    border-image: linear-gradient(
+        to bottom left,
+        #08a88a,
+        #08a88a,
+        black,
+        black,
+        black,
+        black
+      )
+      1;
   }
   #search_bar_lable {
     padding-left: 20px;
@@ -531,13 +560,22 @@
   .main_content {
     display: flex;
     flex-direction: column;
-    border-radius: 10px;
-    border: 2px solid black;
-    border-bottom: 7px solid black;
-    border-right: 7px solid black;
-    box-shadow: 4px 4px 10px black;
+    border: 2px solid;
+    border-bottom: 7px solid;
+    border-right: 7px solid;
+    background: linear-gradient(to bottom right, transparent, white, white);
+    border-image: linear-gradient(
+        to bottom right,
+        #08a88a,
+        #08a88a,
+        black,
+        black,
+        black,
+        black
+      )
+      1;
     width: 90%;
-    background-color: white;
+
     margin-top: 20px;
   }
   .main_content hr {
