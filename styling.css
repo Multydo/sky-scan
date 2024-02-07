@@ -119,7 +119,7 @@
   .search_result {
     background-color: transparent;
     border: 2px solid #fcc700;
-    color: #fcc700;
+    color: #252a2b;
     margin: 5px;
     transition: all 0.3s ease;
   }
@@ -140,7 +140,7 @@
   .search_history {
     background-color: transparent;
     border: 2px solid #fcc700;
-    color: #fcc700;
+    color: #252a2b;
     margin: 5px;
     transition: all 0.3s ease;
     padding: 10px;
@@ -392,7 +392,7 @@
   .search_result {
     background-color: transparent;
     border: 2px solid #fcc700;
-    color: #fcc700;
+    color: #252a2b;
     margin: 5px;
     transition: all 0.3s ease;
   }
@@ -413,7 +413,7 @@
   .search_history {
     background-color: transparent;
     border: 2px solid #fcc700;
-    color: #fcc700;
+    color: #252a2b;
     margin: 5px;
     transition: all 0.3s ease;
     padding: 10px;
