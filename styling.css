@@ -138,7 +138,7 @@
   }
   .search_result {
     background-color: transparent;
-    border: 2px solid #fcc700;
+    border: 2px solid rgba(76, 190, 255, 0.6);
     color: #252a2b;
     margin: 5px;
     transition: all 0.3s ease;
@@ -148,7 +148,7 @@
     scale: 1.1;
     z-index: 2;
     box-shadow: 4px 4px 10px #252a2b;
-    background-color: #fcc700;
+    background-color: rgba(76, 190, 255, 0.6);
     color: #252a2b;
   }
   .search_result:hover h3 {
@@ -159,7 +159,7 @@
   }
   .search_history {
     background-color: transparent;
-    border: 2px solid #fcc700;
+    border: 2px solid rgba(76, 190, 255, 0.6);
     color: #252a2b;
     margin: 5px;
     transition: all 0.3s ease;
@@ -172,7 +172,7 @@
     scale: 1.1;
     z-index: 2;
     box-shadow: 4px 4px 10px #252a2b;
-    background-color: #fcc700;
+    background-color: rgba(76, 190, 255, 0.6);
     color: #252a2b;
     text-shadow: 2px 2px 4px #252a2b;
   }
@@ -433,7 +433,7 @@
   }
   .search_result {
     background-color: transparent;
-    border: 2px solid #fcc700;
+    border: 2px solid rgba(76, 190, 255, 0.6);
     color: #252a2b;
     margin: 5px;
     transition: all 0.3s ease;
@@ -443,7 +443,7 @@
     scale: 1.1;
     z-index: 2;
     box-shadow: 4px 4px 10px #252a2b;
-    background-color: #fcc700;
+    background-color: rgba(76, 190, 255, 0.6);
     color: #252a2b;
   }
   .search_result:hover h3 {
@@ -454,7 +454,7 @@
   }
   .search_history {
     background-color: transparent;
-    border: 2px solid #fcc700;
+    border: 2px solid rgba(76, 190, 255, 0.6);
     color: #252a2b;
     margin: 5px;
     transition: all 0.3s ease;
@@ -467,7 +467,7 @@
     scale: 1.1;
     z-index: 2;
     box-shadow: 4px 4px 10px #252a2b;
-    background-color: #fcc700;
+    background-color: rgba(76, 190, 255, 0.6);
     color: #252a2b;
     text-shadow: 2px 2px 4px #252a2b;
   }
