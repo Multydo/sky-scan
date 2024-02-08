@@ -174,6 +174,46 @@ function forcast(location) {
 }
 
 function biuldForcastData() {
+  let USstandard = "";
+  let UKstandard = "";
+  switch (forcast_data.current.air_quality.us_epa_index) {
+    case 1:
+      USstandard = "Good";
+      break;
+    case 2:
+      USstandard = "Moderate";
+      break;
+    case 3:
+      USstandard = "Unhealthy for sensitive group";
+      break;
+    case 4:
+      USstandard = "Unhealthy";
+      break;
+    case 5:
+      USstandard = "Very Unhealthy";
+      break;
+    case 6:
+      USstandard = "Hazardous";
+      break;
+  }
+  if (
+    forcast_data.current.air_quality.gb_defra_index >= 1 &&
+    forcast_data.current.air_quality.gb_defra_index <= 3
+  ) {
+    UKstandard = "Low";
+  } else if (
+    forcast_data.current.air_quality.gb_defra_index >= 4 &&
+    forcast_data.current.air_quality.gb_defra_index <= 6
+  ) {
+    UKstandard = "Moderate";
+  } else if (
+    forcast_data.current.air_quality.gb_defra_index >= 7 &&
+    forcast_data.current.air_quality.gb_defra_index <= 9
+  ) {
+    UKstandard = "High";
+  } else if (forcast_data.current.air_quality.gb_defra_index == 10) {
+    UKstandard = "Very High";
+  }
   data_for_display += `<h3>Curent Weather for :</h3>
     <h4>${forcast_data.location.name}/${forcast_data.location.country}</h4>
     <div class="sub-info-1">
@@ -204,18 +244,28 @@ function biuldForcastData() {
       <h4>Gust :${forcast_data.current.gust_kph} kph</h4>
       <h4>Humidity :${forcast_data.current.humidity}%</h4>
       <h4>Precipitation :${forcast_data.current.precip_mm} mm</h4>
+      <h4>Pressure :${forcast_data.current.pressure_mb} mb</h4>
+      <h4>Visibility :${forcast_data.current.vis_km} km</h4>
     </div>
     <div class="sub_content_data">
       <h4>Wind Degree :${forcast_data.current.wind_degree}</h4>
       <h4>Wind Direction :${forcast_data.current.wind_dir}</h4>
-      <h4>Wind Speed :${forcast_data.current.wind_kph} kph</h4>
+      <h4>Wind Speed :${forcast_data.current.wind_kph} kph</h4>  
+       <h4>UV Index :${forcast_data.current.uv}</h4>
     </div>
+   
+   
     <div class="sub_content_data">
-      <h4>Pressure :${forcast_data.current.pressure_mb} mb</h4>
-      <h4>Visibility :${forcast_data.current.vis_km} km</h4>
-      <h4>UV Index :${forcast_data.current.uv}</h4>
+    <h3>Air Quality:</h3>
+    <h4>Carbon Monoxide: ${forcast_data.current.air_quality.co}μg/m3</h4>
+    <h4>Ozone: ${forcast_data.current.air_quality.o3}μg/m3</h4>
+    <h4>Nitrogen dioxide: ${forcast_data.current.air_quality.no2}μg/m3</h4>
+    <h4>Sulphur dioxide: ${forcast_data.current.air_quality.so2}μg/m3</h4>
+    <h4>PM2.5:${forcast_data.current.air_quality.pm2_5}μg/m3</h4>
+    <h4>PM10: ${forcast_data.current.air_quality.pm10}μg/m3</h4>
+    <h4>US - EPA standard: ${USstandard}</h4>
+    <h4>UK Defra Index: ${UKstandard}</h4>
     </div>
-    
     `;
   } else {
     sub_data_for_display += `
@@ -223,30 +273,54 @@ function biuldForcastData() {
       <h4>Gust :${forcast_data.current.gust_mph} mph</h4>
       <h4>Humidity :${forcast_data.current.humidity}%</h4>
       <h4>Precipitation :${forcast_data.current.precip_in} in</h4>
+            <h4>Pressure :${forcast_data.current.pressure_in} in</h4>
+      <h4>Visibility :${forcast_data.current.vis_miles} mile(s)</h4>
     </div>
     <div class="sub_content_data">
       <h4>Wind Degree :${forcast_data.current.wind_degree}</h4>
       <h4>Wind Direction :${forcast_data.current.wind_dir}</h4>
       <h4>Wind Speed :${forcast_data.current.wind_mph} mph</h4>
-    </div>
-    <div class="sub_content_data">
-      <h4>Pressure :${forcast_data.current.pressure_in} in</h4>
-      <h4>Visibility :${forcast_data.current.vis_miles} mile(s)</h4>
       <h4>UV Index :${forcast_data.current.uv}</h4>
     </div>
+    
+
+    <div class="sub_content_data">
+    <h3>Air Quality:</h3>
+    <h4>Carbon Monoxide: ${forcast_data.current.air_quality.co}μg/m3</h4>
+    <h4>Ozone: ${forcast_data.current.air_quality.o3}μg/m3</h4>
+    <h4>Nitrogen dioxide: ${forcast_data.current.air_quality.no2}μg/m3</h4>
+    <h4>Sulphur dioxide: ${forcast_data.current.air_quality.so2}μg/m3</h4>
+    <h4>PM2.5:${forcast_data.current.air_quality.pm2_5}μg/m3</h4>
+    <h4>PM10: ${forcast_data.current.air_quality.pm10}μg/m3</h4>
+    <h4>US - EPA standard: ${USstandard}</h4>
+    <h4>UK Defra Index: ${UKstandard}</h4>
+    </div>
+    
     `;
   }
   let size = forcast_data.alerts.alert.length;
   if (size > 0) {
+    alert_for_display += ` <button class="close_alerts_btn" onclick="closeAlerts()">
+   Hide Alerts
+    </button>`;
     for (let i = 0; i < size; i++) {
       alert_for_display += `
   
   <div class="alert_header">
+  <div class="warning_logo"><lord-icon
+    src="https://cdn.lordicon.com/usownftb.json"
+    trigger="loop"
+    stroke="bold"
+    state="hover-oscillate"
+    colors="primary:#121331,secondary:#e83a30"
+    style="width:90px;height:90px">
+</lord-icon></div>
+<div class="sub_alert_header">
         <h2>Warning !!</h2>
-        <h3>Presence of weather alerts:</h3>
-      </div>
+        <h3>${i + 1}. Presence of weather alerts:</h3>
+     </div>
+        </div>
 <h3>Headline: ${forcast_data.alerts.alert[i].headline}</h3>
-<h3>Description: ${forcast_data.alerts.alert[i].desc}</h3>
       <h3>Area: ${forcast_data.alerts.alert[i].areas}</h3>
 <h3>Severity: ${forcast_data.alerts.alert[i].severity}</h3>
 
@@ -270,7 +344,7 @@ function biuldForcastData() {
       <h3>Msgtype: ${forcast_data.alerts.alert[i].msgtype}</h3>
 
       <h3>Note: ${forcast_data.alerts.alert[i].note}</h3>
-
+<h3>Description: ${forcast_data.alerts.alert[i].desc}</h3>
       <hr>
   
   `;
@@ -300,4 +374,18 @@ function displayForcastData() {
   } else {
     alert_output.style.display = "none";
   }
+}
+
+/* #############################################  MANAGING THE DISPLAY OF ALERTS  ########################################## */
+
+function showAlerts() {
+  let alert_output = document.getElementById("alerts_display");
+  alert_output.innerHTML = alert_for_display;
+}
+function closeAlerts() {
+  document.getElementById(
+    "alerts_display"
+  ).innerHTML = ` <button class="alerts_btn" onclick="showAlerts()">
+    Click to show the alerts again
+    </button>`;
 }
