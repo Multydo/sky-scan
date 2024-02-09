@@ -68,7 +68,7 @@
 
   .navigation {
     margin-top: 20px;
-    background: linear-gradient(to right, transparent, transparent, white);
+    background: linear-gradient(to right, transparent, white);
     width: 80%;
     display: flex;
 
@@ -437,7 +437,7 @@
   .navigation {
     width: 90%;
     margin-top: 20px;
-    background: linear-gradient(to right, transparent, transparent, white);
+    background: linear-gradient(to right, transparent, white, white);
 
     display: flex;
 
