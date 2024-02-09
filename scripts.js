@@ -8,6 +8,9 @@ var SIunits = ["c", "i"];
 var alert_for_display = ``;
 var data_for_display = ``;
 var sub_data_for_display = ``;
+var nb_of_future_days = 14;
+var futur_days_for_display = ``;
+const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 
 cachManager();
 /* #############################################  MANAGING THE NAVIGATION  ########################################## */
@@ -105,7 +108,15 @@ function cachDisplay() {
   }
   console.log("out");
   output.innerHTML = generated_output;
+  lastLocation();
 }
+/* #############################################  MANAGING THE DISPLAY OF LAST SEARCHED LOCATION  ########################################## */
+
+function lastLocation() {
+  let location = cach_data.search_history[0];
+  forcast(location);
+}
+
 /* #############################################  MANAGING THE SEARCH  ########################################## */
 
 function lunshSearch() {
@@ -152,9 +163,6 @@ function saveSearch(location) {
 function forcast(location) {
   const protocol = "/forecast.json";
 
-  let output = document.getElementById("display");
-  let constructe_output = ``;
-
   let constructe_api =
     api_url +
     protocol +
@@ -168,7 +176,7 @@ function forcast(location) {
     .then((data) => {
       console.log(data);
       forcast_data = data;
-      output.innerHTML = constructe_output;
+
       biuldForcastData();
     });
 }
@@ -255,7 +263,7 @@ function biuldForcastData() {
     </div>
    
    
-    <div class="sub_content_data">
+    <div class="sub_content_data" id="air_quality">
     <h3>Air Quality:</h3>
     <h4>Carbon Monoxide: ${forcast_data.current.air_quality.co}μg/m3</h4>
     <h4>Ozone: ${forcast_data.current.air_quality.o3}μg/m3</h4>
@@ -350,7 +358,7 @@ function biuldForcastData() {
   `;
     }
   }
-
+  futureDays();
   displayForcastData();
 }
 
@@ -359,10 +367,12 @@ function displayForcastData() {
   let weather_content = document.getElementById("weather_content");
   let sub_content = document.getElementById("sub_content");
   let alert_output = document.getElementById("alerts_display");
+  let future_output = document.getElementById("forcast_days");
 
   weather_icon.innerHTML = `<img class="condition-icon" src="${forcast_data.current.condition.icon}">`;
   weather_content.innerHTML = data_for_display;
   sub_content.innerHTML = sub_data_for_display;
+  future_output.innerHTML = futur_days_for_display;
 
   if (forcast_data.alerts.alert.length > 0) {
     alert_output.style.display = "block";
@@ -374,6 +384,31 @@ function displayForcastData() {
   } else {
     alert_output.style.display = "none";
   }
+}
+/* #############################################  MANAGING THE OUTPUT STURCTURE FOR FUTURE DAYS  ########################################## */
+
+function futureDays() {
+  for (let i = 0; i < nb_of_future_days; i++) {
+    let date = new Date(forcast_data.forecast.forecastday[i].date);
+    const dayOfWeek = date.getDay();
+
+    if (SIunits[0] == "c") {
+      futur_days_for_display += `<div class="futurDay"><button class="futurDay_button" onclick ="displayFutur(${i})"><div class="futur_content"><img class="future_icon" src="${forcast_data.forecast.forecastday[i].day.condition.icon}" />
+    <hr />
+    <h2>${dayNames[dayOfWeek]}</h2>
+    <h3>Max :${forcast_data.forecast.forecastday[i].day.maxtemp_c} C</h3>
+    <h3>Min : ${forcast_data.forecast.forecastday[i].day.mintemp_c}C</h3>
+    <h3>Chance of rain :${forcast_data.forecast.forecastday[i].day.daily_chance_of_rain}%</h3></div></button></div>`;
+    } else {
+      futur_days_for_display += `<div class="futurDay"><button class="futurDay_button" onclick ="displayFutur(${i})"><div class="futur_content"><img class="future_icon" src="${forcast_data.forecast.forecastday[i].day.condition.icon}" />
+    <hr />
+    <h2>${dayNames[dayOfWeek]}</h2>
+    <h3>Max :${forcast_data.forecast.forecastday[i].day.maxtemp_f} C</h3>
+    <h3>Min : ${forcast_data.forecast.forecastday[i].day.mintemp_f}C</h3>
+    <h3>Chance of rain :${forcast_data.forecast.forecastday[i].day.daily_chance_of_rain}%</h3></div></button></div>`;
+    }
+  }
+  return;
 }
 
 /* #############################################  MANAGING THE DISPLAY OF ALERTS  ########################################## */
