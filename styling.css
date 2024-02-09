@@ -701,7 +701,7 @@
   }
   .futurDay_button:hover {
     scale: 1.1;
-    border-color: #4cbeff99;
+    border-color: #4cbeff;
   }
   .futur_content {
     display: flex;
