@@ -235,18 +235,33 @@
     border-bottom-left-radius: 10px;
   }
   .main_content {
-    display: flex;
-    background-color: white;
-    border: 2px solid black;
-    border-bottom: 7px solid black;
-    border-right: 7px solid black;
-    border-radius: 10px;
     width: 80%;
+  }
+  #weather_content {
+    border: 2px dashed black;
+
+    width: 100%;
+    padding: 10px;
 
     margin-top: 20px;
   }
-  .main_content hr {
-    margin: 20px;
+
+  .main_content_header {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: white;
+  }
+  .content_data {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .sub_content_data {
+    background-color: white;
+    padding: 20px;
+    border: 2px solid black;
+    border-radius: 10px;
   }
   .head_content {
     display: flex;
@@ -263,15 +278,7 @@
   #weather_icon img {
     scale: 0.5;
   }
-  .text_content {
-    width: 100%;
-  }
-  .sub-info-1 {
-    /*width: 110%;*/
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
+
   #sub_content {
     display: flex;
     justify-content: space-between;
@@ -363,13 +370,10 @@
     margin-right: 10px;
   }
   #future_display_main {
-    width: 80%;
+    display: none;
+    border: 2px dashed black;
+    padding: 10px;
     margin-top: 30px;
-    border-radius: 10px;
-    background-color: white;
-    border: 2px solid black;
-    border-right: 7px solid black;
-    border-bottom: 7px solid black;
   }
   #future_display {
     display: flex;
@@ -378,10 +382,33 @@
     justify-content: space-between;
     align-items: center;
 
-    background-color: white;
+    /* background-color: white;*/
   }
-  #future_display hr {
+  /*#future_display hr {
     height: 100%;
+  }*/
+  .futur_data_header {
+    background-color: white;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-right: 20px;
+  }
+  .sub_content_data_2 {
+    background-color: white;
+
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-right: 20px;
+  }
+  .futur_header {
+    background-color: white;
+    margin-top: 30px;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-right: 20px;
   }
 }
 @media (max-width: 768px) {
@@ -618,18 +645,34 @@
     border-bottom-left-radius: 10px;
   }
   .main_content {
-    display: flex;
-    flex-direction: column;
-    border: 2px solid black;
-    border-bottom: 7px solid black;
-    border-right: 7px solid black;
-    background-color: white;
+    margin-top: 20px;
     width: 90%;
-    border-radius: 10px;
+    padding: 10px;
+    border: 2px dashed black;
+  }
+  #weather_content {
+    width: 100%;
+
     margin-top: 20px;
   }
-  .main_content hr {
-    margin: 20px;
+  .main_content_header {
+    border: 2px solid black;
+    border-radius: 10px;
+    padding: 10px;
+    background-color: white;
+  }
+  .content_data {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+  }
+  .sub_content_data {
+    background-color: white;
+    padding: 20px;
+    margin-top: 20px;
+    border: 2px solid black;
+    border-radius: 10px;
   }
   .head_content {
     display: flex;
@@ -645,9 +688,6 @@
   }
   #weather_icon img {
     scale: 0.5;
-  }
-  .text_content {
-    width: 100%;
   }
 
   .sub_content_data {
@@ -733,21 +773,40 @@
     margin-right: 10px;
   }
   #future_display_main {
+    display: none;
+    border: 2px dashed black;
+    padding: 10px;
     width: 90%;
     margin-top: 30px;
-    border-radius: 10px;
-    background-color: white;
-    border: 2px solid black;
-    border-right: 7px solid black;
-    border-bottom: 7px solid black;
   }
   #future_display {
-    width: 100%;
-    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
 
-    background-color: white;
+    margin-top: 30px;
+    justify-content: space-between;
+    align-items: center;
   }
-  #future_display hr {
-    height: 100%;
+  .futur_data_header {
+    background-color: white;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-right: 20px;
+  }
+  .sub_content_data_2 {
+    background-color: white;
+    margin-top: 20px;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+  }
+  .futur_header {
+    background-color: white;
+    margin-top: 30px;
+    padding: 10px;
+    border: 2px solid black;
+    border-radius: 10px;
+    margin-right: 20px;
   }
 }
