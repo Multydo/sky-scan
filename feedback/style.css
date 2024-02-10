@@ -16,6 +16,7 @@ svg {
 }
 h1 {
   text-align: center;
+  padding-top: 20px;
   color:  #08a88a;
 }
 
@@ -44,6 +45,7 @@ label{
 input{
   height: 30px;
   width: 250px;
+  border: 2px solid black;
 }
 button {
   width: 200px;
@@ -56,6 +58,7 @@ button {
 button:hover {
   background-color: white;
   color:  #08a88a;
+  transition:all 0.3s ease;
 }
 @media screen and (max-width: 600px) {
   input[type=text], select, textarea {
