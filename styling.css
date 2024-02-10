@@ -68,7 +68,7 @@
 
   .navigation {
     margin-top: 20px;
-    background: linear-gradient(to right, transparent, transparent, white);
+    background: linear-gradient(to right, transparent, white);
     width: 80%;
     display: flex;
 
@@ -92,7 +92,6 @@
     width: 80px;
     border-radius: 200px;
     margin-right: 10px;
-    background-color: white;
   }
   .right-nav-part {
     display: flex;
@@ -317,6 +316,7 @@
     padding: 5px;
     transition: all 0.3s ease;
   }
+
   .close_alerts_btn:hover {
     border: 3px solid red;
     scale: 1.1;
@@ -332,6 +332,56 @@
 
   .sub_alert_header {
     width: 50%;
+  }
+  #forcast_days {
+    width: 80%;
+    margin-top: 30px;
+  }
+  .futurDay_button {
+    width: 100%;
+    display: flex;
+    margin-bottom: 10px;
+    background-color: white;
+    border: 2px solid black;
+    border-bottom: 5px solid black;
+    border-right: 5px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all ease 0.3s;
+  }
+  .futurDay_button:hover {
+    scale: 1.1;
+    border-color: #4cbeff99;
+  }
+  .futur_content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .futur_content h2,
+  h3 {
+    margin-right: 10px;
+  }
+  #future_display_main {
+    width: 80%;
+    margin-top: 30px;
+    border-radius: 10px;
+    background-color: white;
+    border: 2px solid black;
+    border-right: 7px solid black;
+    border-bottom: 7px solid black;
+  }
+  #future_display {
+    display: flex;
+    width: 100%;
+    margin-top: 30px;
+    justify-content: space-between;
+    align-items: center;
+
+    background-color: white;
+  }
+  #future_display hr {
+    height: 100%;
   }
 }
 @media (max-width: 768px) {
@@ -407,7 +457,7 @@
   .navigation {
     width: 90%;
     margin-top: 20px;
-    background: linear-gradient(to right, transparent, transparent, white);
+    background: linear-gradient(to right, transparent, white, white);
 
     display: flex;
 
@@ -652,5 +702,52 @@
 
   .sub_alert_header {
     width: 50%;
+  }
+  #forcast_days {
+    width: 90%;
+    margin-top: 30px;
+  }
+  .futurDay_button {
+    width: 100%;
+    display: flex;
+    margin-bottom: 10px;
+    background-color: white;
+    border: 2px solid black;
+    border-bottom: 5px solid black;
+    border-right: 5px solid black;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: all ease 0.3s;
+  }
+  .futurDay_button:hover {
+    scale: 1.1;
+    border-color: #4cbeff;
+  }
+  .futur_content {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+  .futur_content h2,
+  h3 {
+    margin-right: 10px;
+  }
+  #future_display_main {
+    width: 90%;
+    margin-top: 30px;
+    border-radius: 10px;
+    background-color: white;
+    border: 2px solid black;
+    border-right: 7px solid black;
+    border-bottom: 7px solid black;
+  }
+  #future_display {
+    width: 100%;
+    margin-top: 30px;
+
+    background-color: white;
+  }
+  #future_display hr {
+    height: 100%;
   }
 }
