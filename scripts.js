@@ -223,9 +223,17 @@ function biuldForcastData() {
   } else if (forcast_data.current.air_quality.gb_defra_index == 10) {
     UKstandard = "Very High";
   }
-  data_for_display += `<h3>Curent Weather for :</h3>
-    <h4>${forcast_data.location.name}/${forcast_data.location.country}</h4>
-    <div class="sub-info-1">
+  data_for_display += `
+  <div class="main_content_header">
+  
+  <h2>Curent Weather for :</h2>
+    <h3>${forcast_data.location.name}/${forcast_data.location.country}</h3>
+   
+   </div>
+   <div class="content_data">
+   <div class="sub_content_data">
+   <div class="sub-info-1">
+   <img class="condition-icon" src="${forcast_data.current.condition.icon}">
         <h4>${forcast_data.current.condition.text}</h4>`;
   if (SIunits[0] == "c") {
     data_for_display += `
@@ -234,6 +242,7 @@ function biuldForcastData() {
     <div class="sub-info-1">
         <h4>Clouds : ${forcast_data.current.cloud} %</h4>
         <h4>Feels Like : ${forcast_data.current.feelslike_c} C </h4>
+    </div>
     </div>
           `;
   } else {
@@ -244,11 +253,12 @@ function biuldForcastData() {
         <h4>Clouds : ${forcast_data.current.cloud} %</h4>
         <h4>Feels Like : ${forcast_data.current.feelslike_f} F </h4>
     </div>
+    </div>
           `;
   }
 
   if (SIunits[1] == "m") {
-    sub_data_for_display += `
+    data_for_display += `
     <div class="sub_content_data">
       <h4>Gust :${forcast_data.current.gust_kph} kph</h4>
       <h4>Humidity :${forcast_data.current.humidity}%</h4>
@@ -275,9 +285,10 @@ function biuldForcastData() {
     <h4>US - EPA standard: ${USstandard}</h4>
     <h4>UK Defra Index: ${UKstandard}</h4>
     </div>
+    </div>
     `;
   } else {
-    sub_data_for_display += `
+    data_for_display += `
     <div class="sub_content_data">
       <h4>Gust :${forcast_data.current.gust_mph} mph</h4>
       <h4>Humidity :${forcast_data.current.humidity}%</h4>
@@ -304,7 +315,7 @@ function biuldForcastData() {
     <h4>US - EPA standard: ${USstandard}</h4>
     <h4>UK Defra Index: ${UKstandard}</h4>
     </div>
-    
+    </div>
     `;
   }
   let size = forcast_data.alerts.alert.length;
@@ -364,15 +375,15 @@ function biuldForcastData() {
 }
 
 function displayForcastData() {
-  let weather_icon = document.getElementById("weather_icon");
   let weather_content = document.getElementById("weather_content");
-  let sub_content = document.getElementById("sub_content");
+
   let alert_output = document.getElementById("alerts_display");
   let future_output = document.getElementById("forcast_days");
+  let output_main = document.getElementById("future_display_main");
+  output_main.style.display = "none";
 
-  weather_icon.innerHTML = `<img class="condition-icon" src="${forcast_data.current.condition.icon}">`;
   weather_content.innerHTML = data_for_display;
-  sub_content.innerHTML = sub_data_for_display;
+
   future_output.innerHTML = futur_days_for_display;
 
   if (forcast_data.alerts.alert.length > 0) {
@@ -412,6 +423,7 @@ function futureDays() {
   return;
 }
 function displayFutur(dayNub) {
+  futur_day_data_for_display = ``;
   let USstandard = "";
   let UKstandard = "";
   switch (
@@ -464,10 +476,10 @@ function displayFutur(dayNub) {
     UKstandard = "Very High";
   }
 
-  futur_day_data_for_display += `
+  futur_day_data_for_display += `<div class="futur_data_header">
   <div class="futur_weather_icon"><img class="condition-icon" src="${forcast_data.forecast.forecastday[dayNub].day.condition.icon}"></div>
   
-<div class="futur_data_header">
+
  
     <div class="sub-info-2">
         <h4>${forcast_data.forecast.forecastday[dayNub].day.condition.text}</h4>`;
@@ -485,7 +497,7 @@ function displayFutur(dayNub) {
     futur_day_data_for_display += `
           <h4>Max : ${forcast_data.forecast.forecastday[dayNub].day.maxtemp_f} F </h4>
           </div>
-    <div class="sub-info-1">
+    <div class="sub-info-2">
         <h4>Average temperature : ${forcast_data.forecast.forecastday[dayNub].day.avgtemp_f} F</h4>
         <h4>Min : ${forcast_data.forecast.forecastday[dayNub].day.mintemp_f} F </h4>
     </div>
@@ -494,7 +506,7 @@ function displayFutur(dayNub) {
   }
   if (SIunits[1] == "m") {
     futur_day_data_for_display += `
-    <div class="sub_content_data">
+    <div class="sub_content_data_2">
     <h4>Sun : rise ${forcast_data.forecast.forecastday[dayNub].astro.sunrise} , set ${forcast_data.forecast.forecastday[dayNub].astro.sunset}</h4>
      
       <h4>Moon : rise ${forcast_data.forecast.forecastday[dayNub].astro.moonrise} , set ${forcast_data.forecast.forecastday[dayNub].astro.moonset}</h4> 
@@ -503,7 +515,7 @@ function displayFutur(dayNub) {
        <h4>Average Visibility :${forcast_data.forecast.forecastday[dayNub].day.avgvis_km} km</h4>
     <h4>Total Precipitation: ${forcast_data.forecast.forecastday[dayNub].day.totalprecip_mm} mm</h4>
        </div>
-    <div class="sub_content_data">
+    <div class="sub_content_data_2">
       <h4>Chance of Rain :${forcast_data.forecast.forecastday[dayNub].day.daily_chance_of_rain} %</h4>
       <h4>Chance of Snow :${forcast_data.forecast.forecastday[dayNub].day.daily_chance_of_snow} %</h4>
       <h4>Max Wind Speed :${forcast_data.forecast.forecastday[dayNub].day.maxwind_kph} kph</h4>  
@@ -511,7 +523,7 @@ function displayFutur(dayNub) {
     </div>
    
    
-    <div class="sub_content_data" id="air_quality">
+    <div class="sub_content_data_2" id="air_quality">
     <h3>Air Quality:</h3>
     <h4>Carbon Monoxide: ${forcast_data.forecast.forecastday[dayNub].day.air_quality.co}μg/m3</h4>
     <h4>Ozone: ${forcast_data.forecast.forecastday[dayNub].day.air_quality.o3}μg/m3</h4>
@@ -525,7 +537,7 @@ function displayFutur(dayNub) {
     `;
   } else {
     futur_day_data_for_display += `
-    <div class="sub_content_data">
+    <div class="sub_content_data_2">
     <h4>Sun : rise ${forcast_data.forecast.forecastday[dayNub].astro.sunrise} , set ${forcast_data.forecast.forecastday[dayNub].astro.sunset}</h4>
      
       <h4>Moon : rise ${forcast_data.forecast.forecastday[dayNub].astro.moonrise} , set ${forcast_data.forecast.forecastday[dayNub].astro.moonset}</h4> 
@@ -534,7 +546,7 @@ function displayFutur(dayNub) {
        <h4>Average Visibility :${forcast_data.forecast.forecastday[dayNub].day.avgvis_miles} mile</h4>
     <h4>Total Precipitation: ${forcast_data.forecast.forecastday[dayNub].day.totalprecip_in} in</h4>
        </div>
-    <div class="sub_content_data">
+    <div class="sub_content_data_2">
       <h4>Chance of Rain :${forcast_data.forecast.forecastday[dayNub].day.daily_chance_of_rain} %</h4>
       <h4>Chance of Snow :${forcast_data.forecast.forecastday[dayNub].day.daily_chance_of_snow} %</h4>
       <h4>Max Wind Speed :${forcast_data.forecast.forecastday[dayNub].day.maxwind_mph} mph</h4>  
@@ -542,7 +554,7 @@ function displayFutur(dayNub) {
     </div>
    
    
-    <div class="sub_content_data" id="air_quality">
+    <div class="sub_content_data_2" id="air_quality">
     <h3>Air Quality:</h3>
     <h4>Carbon Monoxide: ${forcast_data.forecast.forecastday[dayNub].day.air_quality.co}μg/m3</h4>
     <h4>Ozone: ${forcast_data.forecast.forecastday[dayNub].day.air_quality.o3}μg/m3</h4>
@@ -565,6 +577,7 @@ function displayFutur_data(dayNub) {
     
     </div><div id="future_display"></div>
     `;
+  output_main.style.display = "block";
 
   let output = document.getElementById("future_display");
   output.innerHTML = futur_day_data_for_display;
