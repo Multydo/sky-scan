@@ -11,6 +11,7 @@ var sub_data_for_display = ``;
 var nb_of_future_days = 14;
 var futur_days_for_display = ``;
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+var futur_day_data_for_display = ``;
 
 cachManager();
 /* #############################################  MANAGING THE NAVIGATION  ########################################## */
@@ -410,7 +411,164 @@ function futureDays() {
   }
   return;
 }
+function displayFutur(dayNub) {
+  let USstandard = "";
+  let UKstandard = "";
+  switch (
+    forcast_data.forecast.forecastday[dayNub].day.air_quality["us-epa-index"]
+  ) {
+    case 1:
+      USstandard = "Good";
+      break;
+    case 2:
+      USstandard = "Moderate";
+      break;
+    case 3:
+      USstandard = "Unhealthy for sensitive group";
+      break;
+    case 4:
+      USstandard = "Unhealthy";
+      break;
+    case 5:
+      USstandard = "Very Unhealthy";
+      break;
+    case 6:
+      USstandard = "Hazardous";
+      break;
+  }
+  if (
+    forcast_data.forecast.forecastday[dayNub].day.air_quality.gb_defra_index >=
+      1 &&
+    forcast_data.forecast.forecastday[dayNub].day.air_quality.gb_defra_index <=
+      3
+  ) {
+    UKstandard = "Low";
+  } else if (
+    forcast_data.forecast.forecastday[dayNub].day.air_quality.gb_defra_index >=
+      4 &&
+    forcast_data.forecast.forecastday[dayNub].day.air_quality.gb_defra_index <=
+      6
+  ) {
+    UKstandard = "Moderate";
+  } else if (
+    forcast_data.forecast.forecastday[dayNub].day.air_quality.gb_defra_index >=
+      7 &&
+    forcast_data.forecast.forecastday[dayNub].day.air_quality.gb_defra_index <=
+      9
+  ) {
+    UKstandard = "High";
+  } else if (
+    forcast_data.forecast.forecastday[dayNub].day.air_quality.gb_defra_index ==
+    10
+  ) {
+    UKstandard = "Very High";
+  }
 
+  futur_day_data_for_display += `
+  <div class="futur_weather_icon"><img class="condition-icon" src="${forcast_data.forecast.forecastday[dayNub].day.condition.icon}"></div>
+  
+<div class="futur_data_header">
+ 
+    <div class="sub-info-2">
+        <h4>${forcast_data.forecast.forecastday[dayNub].day.condition.text}</h4>`;
+  if (SIunits[0] == "c") {
+    futur_day_data_for_display += `
+          <h4>Max : ${forcast_data.forecast.forecastday[dayNub].day.maxtemp_c} C </h4>
+          </div>
+    <div class="sub-info-2">
+        <h4>Average temperature : ${forcast_data.forecast.forecastday[dayNub].day.avgtemp_c} C</h4>
+        <h4>Min : ${forcast_data.forecast.forecastday[dayNub].day.mintemp_c} C </h4>
+    </div>
+    </div>
+          `;
+  } else {
+    futur_day_data_for_display += `
+          <h4>Max : ${forcast_data.forecast.forecastday[dayNub].day.maxtemp_f} F </h4>
+          </div>
+    <div class="sub-info-1">
+        <h4>Average temperature : ${forcast_data.forecast.forecastday[dayNub].day.avgtemp_f} F</h4>
+        <h4>Min : ${forcast_data.forecast.forecastday[dayNub].day.mintemp_f} F </h4>
+    </div>
+    </div>
+          `;
+  }
+  if (SIunits[1] == "m") {
+    futur_day_data_for_display += `
+    <div class="sub_content_data">
+    <h4>Sun : rise ${forcast_data.forecast.forecastday[dayNub].astro.sunrise} , set ${forcast_data.forecast.forecastday[dayNub].astro.sunset}</h4>
+     
+      <h4>Moon : rise ${forcast_data.forecast.forecastday[dayNub].astro.moonrise} , set ${forcast_data.forecast.forecastday[dayNub].astro.moonset}</h4> 
+      <h4>Moon Phase :${forcast_data.forecast.forecastday[dayNub].astro.moon_phase} </h4>
+       <h4>Average Humidity :${forcast_data.forecast.forecastday[dayNub].day.avghumidity}%</h4>
+       <h4>Average Visibility :${forcast_data.forecast.forecastday[dayNub].day.avgvis_km} km</h4>
+    <h4>Total Precipitation: ${forcast_data.forecast.forecastday[dayNub].day.totalprecip_mm} mm</h4>
+       </div>
+    <div class="sub_content_data">
+      <h4>Chance of Rain :${forcast_data.forecast.forecastday[dayNub].day.daily_chance_of_rain} %</h4>
+      <h4>Chance of Snow :${forcast_data.forecast.forecastday[dayNub].day.daily_chance_of_snow} %</h4>
+      <h4>Max Wind Speed :${forcast_data.forecast.forecastday[dayNub].day.maxwind_kph} kph</h4>  
+       <h4>UV Index :${forcast_data.forecast.forecastday[dayNub].day.uv}</h4>
+    </div>
+   
+   
+    <div class="sub_content_data" id="air_quality">
+    <h3>Air Quality:</h3>
+    <h4>Carbon Monoxide: ${forcast_data.forecast.forecastday[dayNub].day.air_quality.co}μg/m3</h4>
+    <h4>Ozone: ${forcast_data.forecast.forecastday[dayNub].day.air_quality.o3}μg/m3</h4>
+    <h4>Nitrogen dioxide: ${forcast_data.forecast.forecastday[dayNub].day.air_quality.no2}μg/m3</h4>
+    <h4>Sulphur dioxide: ${forcast_data.forecast.forecastday[dayNub].day.air_quality.so2}μg/m3</h4>
+    <h4>PM2.5:${forcast_data.forecast.forecastday[dayNub].day.air_quality.pm2_5}μg/m3</h4>
+    <h4>PM10: ${forcast_data.forecast.forecastday[dayNub].day.air_quality.pm10}μg/m3</h4>
+    <h4>US - EPA standard: ${USstandard}</h4>
+    <h4>UK Defra Index: ${UKstandard}</h4>
+    </div>
+    `;
+  } else {
+    futur_day_data_for_display += `
+    <div class="sub_content_data">
+    <h4>Sun : rise ${forcast_data.forecast.forecastday[dayNub].astro.sunrise} , set ${forcast_data.forecast.forecastday[dayNub].astro.sunset}</h4>
+     
+      <h4>Moon : rise ${forcast_data.forecast.forecastday[dayNub].astro.moonrise} , set ${forcast_data.forecast.forecastday[dayNub].astro.moonset}</h4> 
+      <h4>Moon Phase :${forcast_data.forecast.forecastday[dayNub].astro.moon_phase} </h4>
+       <h4>Average Humidity :${forcast_data.forecast.forecastday[dayNub].day.avghumidity}%</h4>
+       <h4>Average Visibility :${forcast_data.forecast.forecastday[dayNub].day.avgvis_miles} mile</h4>
+    <h4>Total Precipitation: ${forcast_data.forecast.forecastday[dayNub].day.totalprecip_in} in</h4>
+       </div>
+    <div class="sub_content_data">
+      <h4>Chance of Rain :${forcast_data.forecast.forecastday[dayNub].day.daily_chance_of_rain} %</h4>
+      <h4>Chance of Snow :${forcast_data.forecast.forecastday[dayNub].day.daily_chance_of_snow} %</h4>
+      <h4>Max Wind Speed :${forcast_data.forecast.forecastday[dayNub].day.maxwind_mph} mph</h4>  
+       <h4>UV Index :${forcast_data.forecast.forecastday[dayNub].day.uv}</h4>
+    </div>
+   
+   
+    <div class="sub_content_data" id="air_quality">
+    <h3>Air Quality:</h3>
+    <h4>Carbon Monoxide: ${forcast_data.forecast.forecastday[dayNub].day.air_quality.co}μg/m3</h4>
+    <h4>Ozone: ${forcast_data.forecast.forecastday[dayNub].day.air_quality.o3}μg/m3</h4>
+    <h4>Nitrogen dioxide: ${forcast_data.forecast.forecastday[dayNub].day.air_quality.no2}μg/m3</h4>
+    <h4>Sulphur dioxide: ${forcast_data.forecast.forecastday[dayNub].day.air_quality.so2}μg/m3</h4>
+    <h4>PM2.5:${forcast_data.forecast.forecastday[dayNub].day.air_quality.pm2_5}μg/m3</h4>
+    <h4>PM10: ${forcast_data.forecast.forecastday[dayNub].day.air_quality.pm10}μg/m3</h4>
+    <h4>US - EPA standard: ${USstandard}</h4>
+    <h4>UK Defra Index: ${UKstandard}</h4>
+    </div>
+    `;
+  }
+  displayFutur_data(dayNub);
+}
+
+function displayFutur_data(dayNub) {
+  let output_main = document.getElementById("future_display_main");
+  output_main.innerHTML = `<div class="futur_header"> <h2> Weather for :</h2>
+    <h3>${forcast_data.location.name}/${forcast_data.location.country} on ${forcast_data.forecast.forecastday[dayNub].date}</h3>
+    
+    </div><div id="future_display"></div>
+    `;
+
+  let output = document.getElementById("future_display");
+  output.innerHTML = futur_day_data_for_display;
+}
 /* #############################################  MANAGING THE DISPLAY OF ALERTS  ########################################## */
 
 function showAlerts() {
