@@ -400,6 +400,7 @@ function displayForcastData() {
 /* #############################################  MANAGING THE OUTPUT STURCTURE FOR FUTURE DAYS  ########################################## */
 
 function futureDays() {
+  futur_days_for_display = ``;
   for (let i = 0; i < nb_of_future_days; i++) {
     let date = new Date(forcast_data.forecast.forecastday[i].date);
     const dayOfWeek = date.getDay();
