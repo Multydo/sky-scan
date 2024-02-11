@@ -19,6 +19,15 @@ h1 {
   padding-top: 20px;
   color:  #08a88a;
 }
+.back {
+  position: fixed;
+  top: 20px;
+  left: 30px;
+  margin: 10px;
+  border-radius: 50%;
+  width: 70px;
+  height: 70px;
+}
 
 .feedback {
   position: absolute;
