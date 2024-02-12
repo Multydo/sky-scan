@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>feedback</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="styling.css" />
+    <script src="https://cdn.lordicon.com/ritcuqlt.js"></script>
+  </head>
+  <body>
+    <form method="POST" name="contact" data-netlify="true">
+      <input type="hidden" name="form-name" value="contact" />
+      <div class="header">
+        <h1>Feedback</h1>
+        <a href="../index.html" id="goback">
+          <lord-icon
+            src="https://cdn.lordicon.com/gwvmctbb.json"
+            trigger="hover"
+            style="width: 70px; height: 70px"
+          >
+          </lord-icon
+          >GO BACK
+        </a>
+      </div>
+      <input style="display: none" name="bot-field" />
+
+      <p>
+        <label>Your Name: <input type="text" name="name" /></label>
+      </p>
+      <p>
+        <label>Your Email: <input type="email" name="email" /></label>
+      </p>
+
+      <p>
+        <label
+          >Describe your problem: <textarea name="message"></textarea>
+        </label>
+      </p>
+      <p>
+        <button type="submit">send feedback</button>
+      </p>
+    </form>
+  </body>
+</html>
