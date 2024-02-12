@@ -1,10 +1,14 @@
 const api_key = "b62c832a0d2d4a7abd3110509240602";
 var api_url = "https://api.weatherapi.com/v1";
 var cach_key = "stored-data";
-var cach_data = { cachperm: false, search_history: ["london"] };
+var cach_data = {
+  cachperm: false,
+  search_history: ["london"],
+  units: ["c", "m"],
+};
 var search_mod = "forcast";
 var forcast_data = [];
-var SIunits = ["c", "i"];
+var SIunits = ["c", "m"];
 var alert_for_display = ``;
 var data_for_display = ``;
 var sub_data_for_display = ``;
@@ -12,6 +16,9 @@ var nb_of_future_days = 14;
 var futur_days_for_display = ``;
 const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 var futur_day_data_for_display = ``;
+var marine_data = [];
+var futur_marine_list = ``;
+var marine_futur_list = ``;
 
 cachManager();
 /* #############################################  MANAGING THE NAVIGATION  ########################################## */
@@ -33,15 +40,9 @@ function changeJob(mode) {
   console.log(search_mod);
   document.getElementById(
     "main_content"
-  ).innerHTML = ` <div class="head_content">
-            <div id="weather_icon"></div>
-            <div class="text_content">
-              <div id="weather_content"></div>
-            </div>
-          </div>
-          <div id="sub_content"></div>`;
+  ).innerHTML = ` <div id="weather_content"></div>`;
 
-  cachManager();
+  cachDisplay();
 }
 function jobManager(location) {
   data_for_display = ``;
@@ -54,6 +55,8 @@ function jobManager(location) {
       history_forcast(location);
       break;
     case "marine":
+      document.getElementById("forcast_days").innerHTML = ``;
+      document.getElementById("future_display_main").style.display = "none";
       marine_forcast(location);
       break;
   }
@@ -83,6 +86,8 @@ function cachDisplay() {
   let modeText = document.getElementById("search_bar_lable");
   cach_data = JSON.parse(localStorage.getItem(cach_key));
   console.log("in");
+  SIunits[0] = cach_data.units[0];
+  SIunits[1] = cach_data.units[1];
 
   switch (search_mod) {
     case "forcast":
@@ -115,7 +120,7 @@ function cachDisplay() {
 
 function lastLocation() {
   let location = cach_data.search_history[0];
-  forcast(location);
+  jobManager(location);
 }
 
 /* #############################################  MANAGING THE SEARCH  ########################################## */
@@ -416,8 +421,8 @@ function futureDays() {
       futur_days_for_display += `<div class="futurDay"><button class="futurDay_button" onclick ="displayFutur(${i})"><div class="futur_content"><img class="future_icon" src="${forcast_data.forecast.forecastday[i].day.condition.icon}" />
     <hr />
     <h2>${dayNames[dayOfWeek]}</h2>
-    <h3>Max :${forcast_data.forecast.forecastday[i].day.maxtemp_f} C</h3>
-    <h3>Min : ${forcast_data.forecast.forecastday[i].day.mintemp_f}C</h3>
+    <h3>Max :${forcast_data.forecast.forecastday[i].day.maxtemp_f} F</h3>
+    <h3>Min : ${forcast_data.forecast.forecastday[i].day.mintemp_f} F</h3>
     <h3>Chance of rain :${forcast_data.forecast.forecastday[i].day.daily_chance_of_rain}%</h3></div></button></div>`;
     }
   }
@@ -489,8 +494,9 @@ function displayFutur(dayNub) {
           <h4>Max : ${forcast_data.forecast.forecastday[dayNub].day.maxtemp_c} C </h4>
           </div>
     <div class="sub-info-2">
+    <h4>Min : ${forcast_data.forecast.forecastday[dayNub].day.mintemp_c} C </h4>
         <h4>Average temperature : ${forcast_data.forecast.forecastday[dayNub].day.avgtemp_c} C</h4>
-        <h4>Min : ${forcast_data.forecast.forecastday[dayNub].day.mintemp_c} C </h4>
+        
     </div>
     </div>
           `;
@@ -499,8 +505,9 @@ function displayFutur(dayNub) {
           <h4>Max : ${forcast_data.forecast.forecastday[dayNub].day.maxtemp_f} F </h4>
           </div>
     <div class="sub-info-2">
-        <h4>Average temperature : ${forcast_data.forecast.forecastday[dayNub].day.avgtemp_f} F</h4>
         <h4>Min : ${forcast_data.forecast.forecastday[dayNub].day.mintemp_f} F </h4>
+        <h4>Average temperature : ${forcast_data.forecast.forecastday[dayNub].day.avgtemp_f} F</h4>
+        
     </div>
     </div>
           `;
@@ -595,4 +602,168 @@ function closeAlerts() {
   ).innerHTML = ` <button class="alerts_btn" onclick="showAlerts()">
     Click to show the alerts again
     </button>`;
+}
+/* #############################################  MANAGING THE SETTINGS  ########################################## */
+function showSettings() {
+  document.getElementById("settings_div").style.display = "block";
+  document.getElementById("navigation-menu").style.display = "none";
+  document.getElementById("temperature_unit").value = SIunits[0];
+  document.getElementById("measurement_unit").value = SIunits[1];
+}
+
+function saveSettings() {
+  SIunits[0] = document.getElementById("temperature_unit").value;
+  SIunits[1] = document.getElementById("measurement_unit").value;
+  document.getElementById("settings_div").style.display = "none";
+  cach_data.units[0] = SIunits[0];
+  cach_data.units[1] = SIunits[1];
+  localStorage.setItem(cach_key, JSON.stringify(cach_data));
+}
+/* #############################################  MANAGING THE MARINE API  ########################################## */
+function marine_forcast(location) {
+  const protocol = "/marine.json";
+  document.getElementById("weather_content").style.display = "none";
+  let constructe_api =
+    api_url + protocol + "?key=" + api_key + "&q=" + location;
+  fetch(constructe_api)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      marine_data = data;
+
+      futureMarine();
+    });
+}
+
+function futureMarine() {
+  futur_marine_list = ``;
+  marine_futur_list = ``;
+  for (let i = 0; i < marine_data.forecast.forecastday.length; i++) {
+    let date = new Date(marine_data.forecast.forecastday[i].date);
+    const dayOfWeek = date.getDay();
+
+    if (SIunits[0] == "c") {
+      marine_futur_list += `<div class="futurDay"><button class="futurDay_button" onclick ="biuldMarine(${i})"><div class="futur_content"><img class="future_icon" src="${marine_data.forecast.forecastday[i].day.condition.icon}" />
+    <hr />
+    <h2>${dayNames[dayOfWeek]}</h2>
+    <h3>Max :${marine_data.forecast.forecastday[i].day.maxtemp_c} C</h3>
+    <h3>Min : ${marine_data.forecast.forecastday[i].day.mintemp_c} C</h3>
+    <h3>Average temperature:${marine_data.forecast.forecastday[i].day.avgtemp_c} C</h3></div></button></div>`;
+    } else {
+      marine_futur_list += `<div class="futurDay"><button class="futurDay_button" onclick ="biuldMarine(${i})"><div class="futur_content"><img class="future_icon" src="${marine_data.forecast.forecastday[i].day.condition.icon}" />
+    <hr />
+    <h2>${dayNames[dayOfWeek]}</h2>
+    <h3>Max :${marine_data.forecast.forecastday[i].day.maxtemp_f} F</h3>
+    <h3>Min : ${marine_data.forecast.forecastday[i].day.mintemp_f} F</h3>
+    <h3>Average temperature:${marine_data.forecast.forecastday[i].day.avgtemp_f} F</h3></div></button></div>`;
+    }
+  }
+  document.getElementById("forcast_days").innerHTML = marine_futur_list;
+}
+
+function biuldMarine(dayNub) {
+  futur_marine_list = ``;
+  futur_marine_list += `<div class="futur_data_header">
+  <div class="futur_weather_icon"><img class="condition-icon" src="${marine_data.forecast.forecastday[dayNub].day.condition.icon}"></div>
+  
+
+ 
+    <div class="sub-info-2">
+        <h4>${marine_data.forecast.forecastday[dayNub].day.condition.text}</h4>`;
+  if (SIunits[0] == "c") {
+    futur_marine_list += `
+          <h4>Max : ${marine_data.forecast.forecastday[dayNub].day.maxtemp_c} C </h4>
+          </div>
+    <div class="sub-info-2">
+    <h4>Min : ${marine_data.forecast.forecastday[dayNub].day.mintemp_c} C </h4>
+        <h4>Average temperature : ${marine_data.forecast.forecastday[dayNub].day.avgtemp_c} C</h4>
+        
+    </div>
+    </div>
+          `;
+  } else {
+    futur_marine_list += `
+          <h4>Max : ${marine_data.forecast.forecastday[dayNub].day.maxtemp_f} F </h4>
+          </div>
+    <div class="sub-info-2">
+        <h4>Min : ${marine_data.forecast.forecastday[dayNub].day.mintemp_f} F </h4>
+        <h4>Average temperature : ${marine_data.forecast.forecastday[dayNub].day.avgtemp_f} F</h4>
+        
+    </div>
+    </div>
+          `;
+  }
+  if (SIunits[1] == "m") {
+    futur_marine_list += `
+    <div class="sub_content_data_2">
+    <h4>Sun : rise ${marine_data.forecast.forecastday[dayNub].astro.sunrise} , set ${marine_data.forecast.forecastday[dayNub].astro.sunset}</h4>
+    
+      <h4>Moon : rise ${marine_data.forecast.forecastday[dayNub].astro.moonrise} , set ${marine_data.forecast.forecastday[dayNub].astro.moonset}</h4> 
+      
+       <h4>Average Humidity :${marine_data.forecast.forecastday[dayNub].day.avghumidity}%</h4>
+       <h4>Average Visibility :${marine_data.forecast.forecastday[dayNub].day.avgvis_km} km</h4>
+    </div>
+    <div class="sub_content_data_2">
+    <h4>Total Precipitation: ${marine_data.forecast.forecastday[dayNub].day.totalprecip_mm} mm</h4>
+       
+       <h4>Max Wind Speed :${marine_data.forecast.forecastday[dayNub].day.maxwind_kph} kph</h4>  
+       <h4>UV Index :${marine_data.forecast.forecastday[dayNub].day.uv}</h4>
+    </div>
+   
+   
+    <div class="sub_content_data_2" id="air_quality">
+    <h3>Tide Data:</h3>
+`;
+  } else {
+    futur_marine_list += `
+    <div class="sub_content_data_2">
+    <h4>Sun : rise ${marine_data.forecast.forecastday[dayNub].astro.sunrise} , set ${marine_data.forecast.forecastday[dayNub].astro.sunset}</h4>
+     
+      <h4>Moon : rise ${marine_data.forecast.forecastday[dayNub].astro.moonrise} , set ${marine_data.forecast.forecastday[dayNub].astro.moonset}</h4> 
+      
+       <h4>Average Humidity :${marine_data.forecast.forecastday[dayNub].day.avghumidity}%</h4>
+       <h4>Average Visibility :${marine_data.forecast.forecastday[dayNub].day.avgvis_miles} mile</h4>
+       </div>
+    <div class="sub_content_data_2">
+    <h4>Total Precipitation: ${marine_data.forecast.forecastday[dayNub].day.totalprecip_in} in</h4>
+    
+        <h4>Max Wind Speed :${marine_data.forecast.forecastday[dayNub].day.maxwind_mph} mph</h4>  
+       <h4>UV Index :${marine_data.forecast.forecastday[dayNub].day.uv}</h4>
+    </div>
+   
+   
+    <div class="sub_content_data_2" id="air_quality">
+    <h3>Tide Data:</h3>
+    
+    `;
+  }
+
+  for (
+    let i = 0;
+    i < marine_data.forecast.forecastday[dayNub].day.tides[0].tide.length;
+    i++
+  ) {
+    futur_marine_list += `
+  <h4>Height: ${marine_data.forecast.forecastday[dayNub].day.tides[0].tide[i].tide_height_mt} mt</h4>
+    <h4>Time: ${marine_data.forecast.forecastday[dayNub].day.tides[0].tide[i].tide_time}</h4>
+    <h4>Type: ${marine_data.forecast.forecastday[dayNub].day.tides[0].tide[i].tide_type}</h4>
+    <hr class="separator">
+    
+    
+  `;
+  }
+  futur_marine_list += `</div>`;
+  displayMarine(dayNub);
+}
+function displayMarine(dayNub) {
+  let output_main = document.getElementById("future_display_main");
+  output_main.innerHTML = `<div class="futur_header"> <h2> Weather for :</h2>
+    <h3>${marine_data.location.name}/${marine_data.location.country} on ${marine_data.forecast.forecastday[dayNub].date}</h3>
+    
+    </div><div id="future_display"></div>
+    `;
+  output_main.style.display = "block";
+
+  let output = document.getElementById("future_display");
+  output.innerHTML = futur_marine_list;
 }

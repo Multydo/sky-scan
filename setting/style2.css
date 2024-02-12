@@ -1,79 +1,58 @@
-svg {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    box-sizing: border-box;
-    display: block;
-    background-color: #08a88a;
-    background-image: linear-gradient(to bottom, #08a88a, #08a88a, #0e4166);
-    z-index: -20
-  }
-  * {
-    padding: 0;
-    margin: 0;
-  }
-  h1 {
-    text-align: center;
-    padding-top: 20px;
-    color:  #08a88a;
-  }
-  .back {
-    position: fixed;
-    top: 20px;
-    left: 30px;
-    margin: 10px;
-    border-radius: 50%;
-    width: 70px;
-    height: 70px;
-    z-index: +100000000;
-  }
-  label{
-    display: inline-block;
-    font-weight: bold;
-    color:#08a88a;
-    font-size: x-large;
-  }
-  .settings {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: initial;
-    height: initial;
-    border: 1px solid;
-    background-color: rgb(255, 255, 255); 
-    box-shadow: 0px 0px 18px 0px black; 
-    color:#0e4166;
-  }
-  .settings-item{
-   text-align: center;
-   margin: 35px;
-  }
-  select {
-    transform: scale(1.5); 
-    margin-top: 20px;
-}
-option{
-    font-size: larger;
+.settings h1 {
+  text-align: center;
+  padding-top: 20px;
+  color: #08a88a;
 }
 
-  button {
-    width: 200px;
-    height: 45px;
-    font-size: 20px;
-    border: 2px solid  #08a88a;
-    background-color: #08a88a;
-    color: white;
+.settings label {
+  display: inline-block;
+  font-weight: bold;
+  color: #08a88a;
+  font-size: x-large;
+}
+.settings {
+  position: absolute;
+  top: 50%;
+  border-radius: 10px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: initial;
+  height: initial;
+  border: 2px solid #08a88a;
+  background-color: rgb(255, 255, 255);
+  box-shadow: 0px 0px 18px 0px black;
+  color: #0e4166;
+}
+.settings-item {
+  text-align: center;
+  margin: 35px;
+}
+.settings select {
+  transform: scale(1.5);
+  margin-top: 20px;
+}
+.settings option {
+  font-size: larger;
+}
+
+.settings button {
+  width: 200px;
+  height: 45px;
+  font-size: 20px;
+  border: 2px solid #08a88a;
+  background-color: white;
+  color: #08a88a;
+
+  transition: all 0.3s ease;
+}
+.settings button:hover {
+  background-color: #08a88a;
+  color: white;
+  scale: 1.1;
+}
+@media screen and (max-width: 600px) {
+  .settings button[type="submit"] {
+    width: 100%;
+    margin-top: 10px;
   }
-  button:hover {
-    background-color: white;
-    color:  #08a88a;
-    transition:all 0.3s ease;
-  }
-  @media screen and (max-width: 600px) {
-    button[type=submit] {
-      width: 100%;
-      margin-top: 10px;
-    }}
+}
