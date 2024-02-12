@@ -35,7 +35,7 @@
             <h1>SKY SCAN</h1>
           </div>
           <div class="right-nav-part">
-            <a href="#" class="contact-us">
+            <a href="feedback/feedb.html" class="contact-us">
               <lord-icon
                 src="https://cdn.lordicon.com/wzrwaorf.json"
                 trigger="loop"
@@ -84,10 +84,38 @@
             Marine and Sailing weather
           </button>
           <h3>Settings</h3>
-          <button class="settings" id="SISetings" onclick="showSettings()">
+          <button
+            class="settings_button"
+            id="SISetings"
+            onclick="showSettings()"
+          >
             SI Uints
           </button>
         </div>
+
+        <div id="settings_div" class="settings">
+          <h1>Units Settings</h1>
+          <div class="settings-item">
+            <label for="tm-unit">Temperature Unit:</label><br />
+            <select id="temperature_unit">
+              <option value="c">Celsius C</option>
+              <option value="f">Fahrenheit F</option>
+            </select>
+          </div>
+          <div class="settings-item">
+            <label for="tm-unit"> Measurement Unit:</label><br />
+            <select id="measurement_unit">
+              <option value="i">Inch in</option>
+              <option value="m">Meter m</option>
+            </select>
+          </div>
+          <div class="settings-item">
+            <button class="save_setting" onclick="saveSettings()">
+              SAVE SETTINGS</button
+            ><br />
+          </div>
+        </div>
+
         <div class="search-div">
           <div class="search-input-div">
             <h3 id="search_bar_lable"></h3>
