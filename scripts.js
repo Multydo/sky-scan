@@ -19,6 +19,10 @@ var futur_day_data_for_display = ``;
 var marine_data = [];
 var futur_marine_list = ``;
 var marine_futur_list = ``;
+var history_data = ``;
+var far_history_list = ``;
+var history_list = ``;
+var historyDate = "";
 
 cachManager();
 /* #############################################  MANAGING THE NAVIGATION  ########################################## */
@@ -49,10 +53,14 @@ function jobManager(location) {
   sub_data_for_display = ``;
   switch (search_mod) {
     case "forcast":
+      document.getElementById("forcast_days").innerHTML = ``;
+      document.getElementById("future_display_main").style.display = "none";
       forcast(location);
       break;
     case "history":
-      history_forcast(location);
+      document.getElementById("forcast_days").innerHTML = ``;
+      document.getElementById("future_display_main").style.display = "none";
+      reqwestedHistory(location);
       break;
     case "marine":
       document.getElementById("forcast_days").innerHTML = ``;
@@ -120,6 +128,7 @@ function cachDisplay() {
 
 function lastLocation() {
   let location = cach_data.search_history[0];
+
   jobManager(location);
 }
 
@@ -188,6 +197,7 @@ function forcast(location) {
 }
 
 function biuldForcastData() {
+  data_for_display = ``;
   let USstandard = "";
   let UKstandard = "";
   switch (forcast_data.current.air_quality.us_epa_index) {
@@ -766,4 +776,168 @@ function displayMarine(dayNub) {
 
   let output = document.getElementById("future_display");
   output.innerHTML = futur_marine_list;
+}
+/* #############################################  MANAGING THE HISTORY FUNCTIONS  ########################################## */
+function reqwestedHistory(location) {
+  document.getElementById("future_display_main").innerHTML = `
+  <label for="date">Enter the date:</label>
+        <input type="date" id="dateReqwest" name="date" required><br><br>
+        <button id="historyButton" onclick="saveDate('${location}')">Lookup</button>
+  `;
+  document.getElementById("future_display_main").style.display = "block";
+}
+function saveDate(location) {
+  historyDate = document.getElementById("dateReqwest").value;
+
+  var currentDate = new Date();
+  var currentYear = currentDate.getFullYear();
+  var selectedDate = new Date(historyDate);
+  if (selectedDate.getFullYear() !== currentYear) {
+    alert("Please select a date within the current year.");
+    return false;
+  }
+  if (historyDate.length === 10 && historyDate.includes("-")) {
+    var parts = historyDate.split("-");
+    historyDate = parts[0] + "-" + parts[1] + "-" + parts[2];
+  }
+  history_forcast(location);
+}
+
+function history_forcast(location) {
+  const protocol = "/history.json";
+  document.getElementById("weather_content").style.display = "none";
+  let constructe_api =
+    api_url +
+    protocol +
+    "?key=" +
+    api_key +
+    "&q=" +
+    location +
+    "&dt=" +
+    historyDate;
+  fetch(constructe_api)
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data);
+      history_data = data;
+
+      biuldHistory();
+    });
+}
+
+function farHistory() {
+  far_history_list = ``;
+  history_list = ``;
+  for (let i = 0; i < history_data.forecast.forecastday.length; i++) {
+    let date = new Date(history_data.forecast.forecastday[i].date);
+    const dayOfWeek = date.getDay();
+
+    if (SIunits[0] == "c") {
+      far_history_list += `<div class="futurDay"><button class="futurDay_button" onclick ="biuldHistory(${i})"><div class="futur_content"><img class="future_icon" src="${history_data.forecast.forecastday[i].day.condition.icon}" />
+    <hr />
+    <h2>${dayNames[dayOfWeek]}</h2>
+    <h3>Max :${history_data.forecast.forecastday[i].day.maxtemp_c} C</h3>
+    <h3>Min : ${history_data.forecast.forecastday[i].day.mintemp_c} C</h3>
+    <h3>Average temperature:${history_data.forecast.forecastday[i].day.avgtemp_c} C</h3></div></button></div>`;
+    } else {
+      far_history_list += `<div class="futurDay"><button class="futurDay_button" onclick ="biuldHistory(${i})"><div class="futur_content"><img class="future_icon" src="${history_data.forecast.forecastday[i].day.condition.icon}" />
+    <hr />
+    <h2>${dayNames[dayOfWeek]}</h2>
+    <h3>Max :${history_data.forecast.forecastday[i].day.maxtemp_f} F</h3>
+    <h3>Min : ${history_data.forecast.forecastday[i].day.mintemp_f} F</h3>
+    <h3>Average temperature:${history_data.forecast.forecastday[i].day.avgtemp_f} F</h3></div></button></div>`;
+    }
+  }
+  document.getElementById("forcast_days").innerHTML = far_history_list;
+}
+
+function biuldHistory(dayNub) {
+  far_history_list = ``;
+  history_list = ``;
+  history_list += `<div class="futur_data_header">
+  <div class="futur_weather_icon"><img class="condition-icon" src="${history_data.forecast.forecastday[0].day.condition.icon}"></div>
+  
+
+ 
+    <div class="sub-info-2">
+        <h4>${history_data.forecast.forecastday[0].day.condition.text}</h4>`;
+  if (SIunits[0] == "c") {
+    history_list += `
+          <h4>Max : ${history_data.forecast.forecastday[0].day.maxtemp_c} C </h4>
+          </div>
+    <div class="sub-info-2">
+    <h4>Min : ${history_data.forecast.forecastday[0].day.mintemp_c} C </h4>
+        <h4>Average temperature : ${history_data.forecast.forecastday[0].day.avgtemp_c} C</h4>
+        
+    </div>
+    </div>
+          `;
+  } else {
+    history_list += `
+          <h4>Max : ${history_data.forecast.forecastday[0].day.maxtemp_f} F </h4>
+          </div>
+    <div class="sub-info-2">
+        <h4>Min : ${history_data.forecast.forecastday[0].day.mintemp_f} F </h4>
+        <h4>Average temperature : ${history_data.forecast.forecastday[0].day.avgtemp_f} F</h4>
+        
+    </div>
+    </div>
+          `;
+  }
+  if (SIunits[1] == "m") {
+    history_list += `
+    <div class="sub_content_data_2">
+    <h4>Sun : rise ${history_data.forecast.forecastday[0].astro.sunrise} , set ${history_data.forecast.forecastday[0].astro.sunset}</h4>
+    
+      <h4>Moon : rise ${history_data.forecast.forecastday[0].astro.moonrise} , set ${history_data.forecast.forecastday[0].astro.moonset}</h4> 
+      
+       <h4>Average Humidity :${history_data.forecast.forecastday[0].day.avghumidity}%</h4>
+       <h4>Average Visibility :${history_data.forecast.forecastday[0].day.avgvis_km} km</h4>
+    </div>
+    <div class="sub_content_data_2">
+    <h4>Total Precipitation: ${history_data.forecast.forecastday[0].day.totalprecip_mm} mm</h4>
+       
+       <h4>Max Wind Speed :${history_data.forecast.forecastday[0].day.maxwind_kph} kph</h4>  
+       <h4>UV Index :${history_data.forecast.forecastday[0].day.uv}</h4>
+    </div>
+   
+   
+    
+`;
+  } else {
+    history_list += `
+    <div class="sub_content_data_2">
+    <h4>Sun : rise ${history_data.forecast.forecastday[0].astro.sunrise} , set ${history_data.forecast.forecastday[0].astro.sunset}</h4>
+     
+      <h4>Moon : rise ${history_data.forecast.forecastday[0].astro.moonrise} , set ${history_data.forecast.forecastday[0].astro.moonset}</h4> 
+      
+       <h4>Average Humidity :${history_data.forecast.forecastday[0].day.avghumidity}%</h4>
+       <h4>Average Visibility :${history_data.forecast.forecastday[0].day.avgvis_miles} mile</h4>
+       </div>
+    <div class="sub_content_data_2">
+    <h4>Total Precipitation: ${history_data.forecast.forecastday[0].day.totalprecip_in} in</h4>
+    
+        <h4>Max Wind Speed :${history_data.forecast.forecastday[0].day.maxwind_mph} mph</h4>  
+       <h4>UV Index :${history_data.forecast.forecastday[0].day.uv}</h4>
+    </div>
+   
+   
+    
+    
+    `;
+  }
+
+  displayHistory(dayNub);
+}
+function displayHistory(dayNub) {
+  let output_main = document.getElementById("future_display_main");
+  output_main.innerHTML = `<div class="futur_header"> <h2>History weather for :</h2>
+    <h3>${history_data.location.name}/${history_data.location.country} on ${history_data.forecast.forecastday[0].date}</h3>
+    
+    </div><div id="future_display"></div>
+    `;
+  output_main.style.display = "block";
+
+  let output = document.getElementById("future_display");
+  output.innerHTML = history_list;
 }
