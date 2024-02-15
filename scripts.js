@@ -779,10 +779,12 @@ function displayMarine(dayNub) {
 }
 /* #############################################  MANAGING THE HISTORY FUNCTIONS  ########################################## */
 function reqwestedHistory(location) {
-  document.getElementById("future_display_main").innerHTML = `
+  document.getElementById(
+    "future_display_main"
+  ).innerHTML = `<div class="history_date">
   <label for="date">Enter the date:</label>
         <input type="date" id="dateReqwest" name="date" required><br><br>
-        <button id="historyButton" onclick="saveDate('${location}')">Lookup</button>
+        <button id="historyButton" onclick="saveDate('${location}')">Lookup</button></div>
   `;
   document.getElementById("future_display_main").style.display = "block";
 }
